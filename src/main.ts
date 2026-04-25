@@ -1,3 +1,7 @@
+process.env.PORT = process.env.PORT || '10000';
+process.env.SERVER_PORT = process.env.PORT;
+process.env.SERVER_TYPE = 'http';
+
 // Import this first from sentry instrument!
 import '@utils/instrumentSentry';
 
@@ -154,10 +158,10 @@ async function bootstrap() {
     Sentry.setupExpressErrorHandler(app);
   }
 
-  const PORT = process.env.PORT || httpServer.PORT || 3000;
+  const PORT = Number(process.env.PORT) || 10000;
 
-  server.listen(PORT, () => {
-    logger.log(httpServer.TYPE.toUpperCase() + ' - ON: ' + PORT);
+  server.listen(PORT, '0.0.0.0', () => {
+    console.log('SERVER RUNNING ON PORT: ' + PORT);
   });
 
   initWA().catch((error) => {
