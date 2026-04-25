@@ -154,7 +154,6 @@ async function bootstrap() {
     Sentry.setupExpressErrorHandler(app);
   }
 
-  // ✅ FIXED PORT FOR RENDER
   const PORT = process.env.PORT || httpServer.PORT || 3000;
 
   server.listen(PORT, () => {
