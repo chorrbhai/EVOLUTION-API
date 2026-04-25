@@ -78,7 +78,7 @@ async function bootstrap() {
         const webhook = configService.get<Webhook>('WEBHOOK');
 
         if (webhook.EVENTS.ERRORS_WEBHOOK && webhook.EVENTS.ERRORS_WEBHOOK != '' && webhook.EVENTS.ERRORS) {
-          const tzoffset = new Date().getTimezoneOffset() * 60000; //offset in milliseconds
+          const tzoffset = new Date().getTimezoneOffset() * 60000;
           const localISOTime = new Date(Date.now() - tzoffset).toISOString();
           const now = localISOTime;
           const globalApiKey = configService.get<Auth>('AUTHENTICATION').API_KEY.KEY;
@@ -151,13 +151,15 @@ async function bootstrap() {
   const sentryConfig = configService.get<SentryConfig>('SENTRY');
   if (sentryConfig.DSN) {
     logger.info('Sentry - ON');
-
-    // Add this after all routes,
-    // but before any and other error-handling middlewares are defined
     Sentry.setupExpressErrorHandler(app);
   }
 
-  server.listen(httpServer.PORT, () => logger.log(httpServer.TYPE.toUpperCase() + ' - ON: ' + httpServer.PORT));
+  // ✅ FIXED PORT FOR RENDER
+  const PORT = process.env.PORT || httpServer.PORT || 3000;
+
+  server.listen(PORT, () => {
+    logger.log(httpServer.TYPE.toUpperCase() + ' - ON: ' + PORT);
+  });
 
   initWA().catch((error) => {
     logger.error('Error loading instances: ' + error);
