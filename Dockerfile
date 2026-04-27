@@ -8,8 +8,6 @@ RUN npm install
 
 COPY . .
 
-# BUILD TYPESCRIPT
-RUN npm run build
+RUN npm install -g ts-node typescript
 
-# START APP
-CMD ["node", "dist/main.js"]
+CMD ["ts-node", "src/main.ts"]
