@@ -10,10 +10,6 @@ RUN npm install
 # 🔥 NOW copy full project (THIS WAS MISSING BEFORE PRISMA)
 COPY . .
 
-# Prisma commands AFTER copying files
-RUN npx prisma generate
-RUN npx prisma migrate deploy
-
 # Build app
 RUN npm run build || true
 
