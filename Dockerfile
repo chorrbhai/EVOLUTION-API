@@ -10,4 +10,6 @@ COPY . .
 
 RUN npm install -g ts-node typescript
 
-CMD ["ts-node", "src/main.ts"]
+ENV NODE_ENV=production
+
+CMD ["npx", "ts-node", "src/main.ts"]
