@@ -2,17 +2,14 @@ FROM node:20-alpine
 
 WORKDIR /app
 
-# Copy package files first
 COPY package*.json ./
 
 RUN npm install
 
-# 🔥 NOW copy full project (THIS WAS MISSING BEFORE PRISMA)
 COPY . .
 
-# Build app
-RUN npm run build || true
+# BUILD TYPESCRIPT
+RUN npm run build
 
-EXPOSE 10000
-
-CMD ["npm", "run", "start"]
+# START APP
+CMD ["node", "dist/main.js"]
