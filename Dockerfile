@@ -13,7 +13,9 @@ COPY ./package*.json ./
 COPY ./tsconfig.json ./
 COPY ./tsup.config.ts ./
 
-RUN npm ci --silent
+RUN npm install
+RUN npx prisma generate
+RUN npx prisma migrate deploy
 
 COPY ./src ./src
 COPY ./public ./public
