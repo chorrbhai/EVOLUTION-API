@@ -3,7 +3,6 @@ process.env.SERVER_PORT = process.env.PORT;
 process.env.SERVER_TYPE = 'http';
 
 // Import this first from sentry instrument!
-import '@utils/instrumentSentry';
 
 // Now import other modules
 import { ProviderFiles } from '@api/provider/sessions';
