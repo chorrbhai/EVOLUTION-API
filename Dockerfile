@@ -10,4 +10,5 @@ COPY . .
 RUN npm install -g ts-node typescript
 
 # 🔥 FORCE START (ignore npm start completely)
-ENTRYPOINT ["npx", "ts-node", "src/main.ts"]
+ENV NODE_OPTIONS="--max-old-space-size=256"
+CMD ["npx", "ts-node", "src/main.ts"]

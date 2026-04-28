@@ -150,7 +150,7 @@ async function bootstrap() {
     server = ServerUP[httpServer.TYPE];
   }
 
-  eventManager.init(server);
+  // start the HTTP(S) listener using the Express app so env PORT is honored
 
   const sentryConfig = configService.get<SentryConfig>('SENTRY');
   if (sentryConfig.DSN) {
@@ -158,11 +158,14 @@ async function bootstrap() {
     Sentry.setupExpressErrorHandler(app);
   }
 
-  const PORT = Number(process.env.PORT) || 10000;
+  const port = process.env.PORT || 10000;
 
-  server.listen(PORT, '0.0.0.0', () => {
-    console.log('SERVER RUNNING ON PORT: ' + PORT);
+  const listener = app.listen(Number(port), () => {
+    console.log('SERVER RUNNING ON PORT: ' + port);
   });
+
+  // initialize event manager with the actual listening server instance
+  eventManager.init(listener);
 
   initWA().catch((error) => {
     logger.error('Error loading instances: ' + error);
