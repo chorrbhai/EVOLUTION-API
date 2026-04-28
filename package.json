@@ -8,8 +8,8 @@
     "node": "18.x"
   },
   "scripts": {
-    "build": "tsc --noEmit && tsup",
-    "start": "npx ts-node src/main.ts",
+    "build": "tsc",
+    "start": "node dist/main.js",
     "start:prod": "node dist/main",
     "dev:server": "tsx watch ./src/main.ts",
     "test": "tsx watch ./test/all.test.ts",

@@ -1,4 +1,4 @@
-FROM node:20-alpine
+FROM node:18-alpine
 
 WORKDIR /app
 
@@ -7,8 +7,8 @@ RUN npm install
 
 COPY . .
 
-RUN npm install -g ts-node typescript
+# Build TypeScript → JS
+RUN npm run build
 
-# 🔥 FORCE START (ignore npm start completely)
-ENV NODE_OPTIONS="--max-old-space-size=256"
-CMD ["npx", "ts-node", "src/main.ts"]
+# Run compiled app
+CMD ["node", "dist/main.js"]
