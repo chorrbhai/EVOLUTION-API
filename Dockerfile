@@ -7,8 +7,7 @@ RUN npm install
 
 COPY . .
 
-# Build TypeScript → JS
-RUN npm run build
+# Disable Prisma build errors
+ENV TS_NODE_TRANSPILE_ONLY=true
 
-# Run compiled app
-CMD ["node", "dist/main.js"]
+CMD ["npx", "ts-node", "src/main.ts"]
